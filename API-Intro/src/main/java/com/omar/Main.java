@@ -24,7 +24,7 @@ public class Main {
     public static void getMethod() throws URISyntaxException, IOException, InterruptedException {
 //        building my request
         HttpRequest getRequest = HttpRequest.newBuilder()
-                .uri(new URI("https://restcountries.com/v3.1/name/italy"))
+                .uri(new URI("https://swapi.dev/api/people/4"))
                 .GET()
                 .build();
 
@@ -36,10 +36,22 @@ public class Main {
         HttpResponse<String> response = httpClient.send(getRequest, HttpResponse.BodyHandlers.ofString());
 
 //        sout the result of the request
-        System.out.println(response.body());
-
-        
+        System.out.println(response.body().getClass());
 
 
+        Gson gson = new Gson();
+
+//        converts my string into a json object
+        JsonObject convertedResponseToJSON = gson.fromJson(response.body(),JsonObject.class);
+
+        System.out.println(convertedResponseToJSON);
+
+        String characterName = convertedResponseToJSON.get("name").getAsString();
+        int height = convertedResponseToJSON.get("height").getAsInt();
+
+        System.out.println(characterName.toUpperCase());
+        System.out.printf("character name is %s and character height is %dcm",characterName,height);
     }
+
+    
 }
