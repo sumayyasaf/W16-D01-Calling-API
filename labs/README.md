@@ -1,6 +1,3 @@
-Here's the lab in markdown format without the solution code:
-
-```markdown
 # Lab: Calling External APIs - RestCountries and Star Wars API
 
 ## Objective:
