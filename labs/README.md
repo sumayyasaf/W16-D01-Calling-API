@@ -33,6 +33,12 @@ Add Gson dependency in your `pom.xml`:
 {name} country is a great country with a great population of {population} and is in {continent} continent. With the following capitals: {capital}
 ```
 
+1. Take an input from the user for a country name
+
+2. once the name is given a request should be sent to the rest countries api and the values should be displayed as seen above
+
+3. (BONUS) If the country is not found then sout a message to inform the user
+
 ### API Endpoint for RestCountries API:
 - URL: `https://restcountries.com/v3.1/name/{country}` (replace `{country}` with the name of the country)
 
@@ -42,7 +48,7 @@ Add Gson dependency in your `pom.xml`:
 
 ## Step 2: Handle cases where no country is found
 
-If the country is not found, proceed with calling the **Star Wars API** to fetch and display the name of the character with ID 4.
+Call the **Star Wars API** to fetch and display the name of the character with ID 4. You can display the name is any way youd like
 
 ### API Endpoint for Star Wars API:
 - URL: `https://swapi.dev/api/people/4/`

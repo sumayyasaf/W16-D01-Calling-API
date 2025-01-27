@@ -2,6 +2,7 @@ package com.omar;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
@@ -15,13 +16,14 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         try {
-            System.out.println("Here is all the students, which information do you want: ");
+    /*        System.out.println("Here is all the students, which information do you want: ");
             System.out.println(getAllStudents());
             System.out.println("Which student would you like to fetch. Give the id");
             Scanner scanner = new Scanner(System.in);
-            String id = scanner.nextLine();
+            String id = scanner.nextLine();*/
 //            getMethod();
-            getStudentName(id);
+//            getStudentName(id);
+            getCountry();
         } catch (URISyntaxException | IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -93,5 +95,24 @@ public class Main {
         Gson gson = new Gson();
 
         return gson.fromJson(response.body(),JsonArray.class);
+    }
+
+    public static void getCountry() throws URISyntaxException, IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(new URI("https://restcountries.com/v3.1/name/germany"))
+                .GET()
+                .build();
+
+        HttpResponse<String> response = HttpClient.newHttpClient().send(request,HttpResponse.BodyHandlers.ofString());
+
+
+        Gson gson = new Gson();
+
+
+        System.out.println(response.body());
+
+        JsonArray countryInfo = gson.fromJson(response.body(),JsonArray.class);
+
+        System.out.println(countryInfo.get(0).getAsJsonObject().get("name").getAsJsonObject().get("common").getAsString().toUpperCase());
     }
 }
