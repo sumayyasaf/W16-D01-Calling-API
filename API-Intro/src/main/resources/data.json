@@ -1,0 +1,10 @@
+{
+  "name": "Mihai",
+  "course": "Java",
+  "city": "Berlin",
+  "hobbies": ["programming","programming","programming"],
+  "address": {
+    "streetNumber": 157,
+    "streetName": "Main Street"
+  }
+}
