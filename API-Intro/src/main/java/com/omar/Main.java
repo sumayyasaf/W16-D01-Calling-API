@@ -10,12 +10,18 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
         try {
-            getMethod();
+            System.out.println("Here is all the students, which information do you want: ");
+            System.out.println(getAllStudents());
+            System.out.println("Which student would you like to fetch. Give the id");
+            Scanner scanner = new Scanner(System.in);
+            String id = scanner.nextLine();
+//            getMethod();
+            getStudentName(id);
         } catch (URISyntaxException | IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -53,5 +59,39 @@ public class Main {
         System.out.printf("character name is %s and character height is %dcm",characterName,height);
     }
 
-    
+//    Exercise 1: from the omar class API, fetch the object that represents you
+//                display the name as a java String
+
+    public static void getStudentName(String id) throws URISyntaxException, IOException, InterruptedException {
+//        build the request
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(new URI(String.format("https://omar-dci-class.onrender.com/students/%s",id)))
+                .GET()
+                .build();
+
+        HttpResponse<String> response = HttpClient.newHttpClient().send(request,HttpResponse.BodyHandlers.ofString());
+
+
+        Gson gson = new Gson();
+        String studentname = gson.fromJson(response.body(),JsonObject.class).get("studentName").getAsString() ;
+
+        System.out.printf("Student name fetched is: %s",studentname);
+
+
+
+    }
+
+    public static JsonArray getAllStudents() throws URISyntaxException, IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(new URI("https://omar-dci-class.onrender.com/students"))
+                .GET()
+                .build();
+
+        HttpResponse<String> response = HttpClient.newHttpClient().send(request,HttpResponse.BodyHandlers.ofString());
+
+
+        Gson gson = new Gson();
+
+        return gson.fromJson(response.body(),JsonArray.class);
+    }
 }
